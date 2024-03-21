@@ -1,0 +1,9 @@
+C:\Users\gsouza\source\repos\DataGridViewControl\bin\Debug\DataGridViewControl.exe.config
+C:\Users\gsouza\source\repos\DataGridViewControl\bin\Debug\DataGridViewControl.exe
+C:\Users\gsouza\source\repos\DataGridViewControl\bin\Debug\DataGridViewControl.pdb
+C:\Users\gsouza\source\repos\DataGridViewControl\obj\Debug\DataGridViewControl.csproj.AssemblyReference.cache
+C:\Users\gsouza\source\repos\DataGridViewControl\obj\Debug\DataGridViewControl.csproj.GenerateResource.cache
+C:\Users\gsouza\source\repos\DataGridViewControl\obj\Debug\DataGridViewControl.csproj.CoreCompileInputs.cache
+C:\Users\gsouza\source\repos\DataGridViewControl\obj\Debug\DataGridViewControl.exe
+C:\Users\gsouza\source\repos\DataGridViewControl\obj\Debug\DataGridViewControl.pdb
+C:\Users\gsouza\source\repos\DataGridViewControl\obj\Debug\DataGridViewControl.Index.resources
