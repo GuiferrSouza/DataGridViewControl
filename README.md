@@ -14,11 +14,11 @@ Instantiate the `DataGridViewControl` class, passing a `DataGridViewSettings` ob
 ```cs
 var settings = new DataGridViewSettings
 {
-    DataGridView = dataGridView1,			// Mandatory
-    BindingNavigator = bindingNavigator1,	// Optional
-    SearchTextBox = toolStripTextBox1,		// Optional
-    Sortable = true,						// Optional
-    PageSize = 50							// Optional
+    DataGridView = dataGridView1, // Mandatory
+    BindingNavigator = bindingNavigator1, // Optional
+    SearchTextBox = toolStripTextBox1, // Optional
+    Sortable = true, // Optional
+    PageSize = 50 // Optional
 };
 
 var dataGridViewControl = new DataGridViewControl(settings);
