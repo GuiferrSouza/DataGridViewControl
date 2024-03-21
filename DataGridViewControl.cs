@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Collections;
@@ -18,43 +18,43 @@ namespace DataGridViewControl
         private DataTable pageData;
         private DataTable gridData;
 
-        private DataGridViewSettings Settings;
+        private readonly Settings dataGridViewSettings;
 
-        public DataGridViewControl(DataGridViewSettings Settings)
+        public DataGridViewControl(Settings Settings)
         {
-            this.Settings = Settings;
+            this.dataGridViewSettings = Settings;
             InitializeComponent();
         }
 
         private void InitializeComponent()
         {
-            if (Settings.DataGridView == null) return;
+            if (dataGridViewSettings.DataGridView == null) return;
 
-            if (Settings.BindingNavigator != null)
+            if (dataGridViewSettings.BindingNavigator != null)
             {
-                Settings.BindingNavigator.BindingSource = bindingSource;
+                dataGridViewSettings.BindingNavigator.BindingSource = bindingSource;
                 bindingSource.CurrentChanged += new EventHandler(UpdateTable);
                 bindingSource.ResetBindings(false);
             }
 
-            if (Settings.SearchTextBox is ToolStripTextBox toolStripTextBox)
+            if (dataGridViewSettings.SearchTextBox is ToolStripTextBox toolStripTextBox)
             { toolStripTextBox.KeyPress += new KeyPressEventHandler(Search_KeyPress); }
 
-            else if (Settings.SearchTextBox is TextBox textBox)
+            else if (dataGridViewSettings.SearchTextBox is TextBox textBox)
             { textBox.KeyPress += new KeyPressEventHandler(Search_KeyPress); }
 
-            Settings.DataGridView.ColumnHeaderMouseClick += DatabaseGrid_ColumnHeaderMouseClick;
+            dataGridViewSettings.DataGridView.ColumnHeaderMouseClick += DatabaseGrid_ColumnHeaderMouseClick;
         }
 
         private void UpdateTable(object sender, EventArgs e)
         {
-            if (Settings.BindingNavigator != null)
+            if (dataGridViewSettings.BindingNavigator != null)
             {
                 int offset = (int)(bindingSource.Current ?? 0);
                 bool hasRows = pageData.Rows.Count > 0;
 
-                Settings.DataGridView.DataSource = hasRows ? pageData.AsEnumerable()
-                .Skip(offset).Take(Settings.PageSize).CopyToDataTable() : null;
+                dataGridViewSettings.DataGridView.DataSource = hasRows ? pageData.AsEnumerable()
+                .Skip(offset).Take(dataGridViewSettings.PageSize).CopyToDataTable() : null;
             }
 
             SetSortIndicator(sortColumn);
@@ -62,21 +62,21 @@ namespace DataGridViewControl
 
         public void SetDataSource(DataTable dataTable)
         {
-            if (Settings.DataGridView == null) return;
+            if (dataGridViewSettings.DataGridView == null) return;
 
             gridData = dataTable;
             pageData = dataTable;
 
-            if (Settings.BindingNavigator != null)
+            if (dataGridViewSettings.BindingNavigator != null)
             {
-                bindingSource.DataSource = new PageOffsetList(dataTable.Rows.Count, Settings.PageSize);
+                bindingSource.DataSource = new PageOffsetList(dataTable.Rows.Count, dataGridViewSettings.PageSize);
             }
-            else Settings.DataGridView.DataSource = dataTable;
+            else dataGridViewSettings.DataGridView.DataSource = dataTable;
         }
 
         private void SetSortIndicator(string columnName)
         {
-            foreach (DataGridViewColumn column in Settings.DataGridView.Columns)
+            foreach (DataGridViewColumn column in dataGridViewSettings.DataGridView.Columns)
             {
                 bool isAsc = sortOrder == SortOrder.Ascending;
 
@@ -90,9 +90,9 @@ namespace DataGridViewControl
 
         private void DatabaseGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && Settings.Sortable)
+            if (e.Button == MouseButtons.Left && dataGridViewSettings.Sortable)
             {
-                string columnName = Settings.DataGridView.Columns[e.ColumnIndex].Name;
+                string columnName = dataGridViewSettings.DataGridView.Columns[e.ColumnIndex].Name;
 
                 if (columnName != sortColumn) sortOrder = SortOrder.Ascending;
                 pageData = ToggleSortOrder(pageData, columnName);
@@ -131,7 +131,7 @@ namespace DataGridViewControl
 
         public void SearchValue(string val)
         {
-            if (Settings.DataGridView == null) return;
+            if (dataGridViewSettings.DataGridView == null) return;
             Search(val, EventArgs.Empty);
         }
 
@@ -157,11 +157,12 @@ namespace DataGridViewControl
             rows.Any() ? rows.CopyToDataTable() :
             gridData.Clone() : gridData.Copy();
 
-            bindingSource.DataSource = new PageOffsetList(pageData.Rows.Count, Settings.PageSize);
+            bindingSource.DataSource = new PageOffsetList(pageData.Rows.Count, dataGridViewSettings.PageSize);
             bindingSource.Position = 0;
         }
 
-        public class DataGridViewSettings
+
+        public class Settings
         {
             public BindingNavigator BindingNavigator { get; set; }
             public DataGridView DataGridView { get; set; }
