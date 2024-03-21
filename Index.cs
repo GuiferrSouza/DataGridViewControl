@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
 using System.Data;
 using System;
 
@@ -13,7 +13,7 @@ namespace DataGridViewControl
 
             // Initializing DataGridView Control
             dataGridViewControl = new DataGridViewControl(
-            new DataGridViewControl.DataGridViewSettings
+            new DataGridViewControl.Settings
             {
                 DataGridView = myDataGridView,          // Mandatory
                 BindingNavigator = myBindingNavigator,  // Optional
